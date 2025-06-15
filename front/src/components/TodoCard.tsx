@@ -34,7 +34,7 @@ export const TodoCard: React.FC<TodoCardProps> = ({
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return `${date.getMonth() + 1}/${date.getDate()}`;
+    return `${date.getMonth() + 1}月${date.getDate()}日`;
   };
 
   return (
@@ -55,13 +55,13 @@ export const TodoCard: React.FC<TodoCardProps> = ({
 
       {/* 担当者 */}
       <div className="flex items-center gap-2 mb-2">
-        <User size={16} className="text-gray-400" />
-        <span className="text-sm text-gray-600">{todo.assignee}</span>
+        <User size={16} className="text-indigo-500" />
+        <span className="text-sm text-gray-900 font-normal">{todo.assignee}</span>
       </div>
 
       {/* 締切日 */}
       <div className="flex items-center gap-2 mb-3">
-        <Calendar size={16} className="text-gray-400" />
+        <Calendar size={16} className="text-indigo-500" />
         <span className={`text-sm ${isOverdue() ? 'text-red-600 font-medium' : 'text-gray-600'}`}>
           {formatDate(todo.deadline)}
           {isOverdue() && (
@@ -72,19 +72,6 @@ export const TodoCard: React.FC<TodoCardProps> = ({
         </span>
       </div>
 
-      {/* ステータス */}
-      <div className="mb-3">
-        <select
-          value={todo.status}
-          onChange={(e) => onStatusChange(todo.id, e.target.value as TodoStatus)}
-          className={`px-3 py-1 rounded-full text-sm border ${getStatusColor(todo.status)} focus:outline-none focus:ring-2 focus:ring-blue-500`}
-        >
-          <option value="未着手">未着手</option>
-          <option value="進行中">進行中</option>
-          <option value="完了">完了</option>
-        </select>
-      </div>
-
       {/* 内容 */}
       {todo.content && (
         <div className="mt-3 p-3 bg-gray-50 rounded-md">
@@ -93,6 +80,20 @@ export const TodoCard: React.FC<TodoCardProps> = ({
           </p>
         </div>
       )}
+
+      {/* ステータス */}
+      <div className="relative mt-4 w-fit">
+        <select
+          value={todo.status}
+          onChange={(e) => onStatusChange(todo.id, e.target.value as TodoStatus)}
+          className={`px-3 py-1 rounded-lg text-sm border ${getStatusColor(todo.status)} focus:outline-none focus:ring-2 focus:ring-blue-500`}
+        >
+          <option value="未着手">未着手</option>
+          <option value="進行中">進行中</option>
+          <option value="完了">完了</option>
+        </select>
+      </div>
+
     </div>
   );
 };
