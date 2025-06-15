@@ -34,7 +34,11 @@ export default function Home() {
           
           <button
             onClick={() => setShowForm(prev => !prev)}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 text-white rounded-md 
+                      bg-gradient-to-r from-blue-500 to-purple-600 
+                      hover:from-blue-600 hover:to-purple-700 
+                      focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 
+                      transition-all"
           >
             <Plus size={20} />
             新しいTODOを作成
