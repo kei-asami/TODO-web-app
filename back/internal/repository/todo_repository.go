@@ -29,8 +29,9 @@ func (r *TodoRepository) Create(todo *model.Todo) error {
 	return r.db.Create(todo).Error
 }
 
-func (r *TodoRepository) Update(todo *model.Todo) error {
-	return r.db.Save(todo).Error
+func (r *TodoRepository) Update(id string, updates map[string]interface{}) error {
+	// GORMのUpdatesメソッドは、マップで渡されたキーのフィールドだけを更新する
+	return r.db.Model(&model.Todo{}).Where("id = ?", id).Updates(updates).Error
 }
 
 func (r *TodoRepository) Delete(id string) error {
