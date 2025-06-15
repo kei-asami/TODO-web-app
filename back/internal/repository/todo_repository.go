@@ -1,0 +1,39 @@
+package repository
+
+import (
+	"backend/internal/model"
+	"gorm.io/gorm"
+)
+
+type TodoRepository struct {
+	db *gorm.DB
+}
+
+func NewTodoRepository(db *gorm.DB) *TodoRepository {
+	return &TodoRepository{db: db}
+}
+
+func (r *TodoRepository) GetAll() ([]*model.Todo, error) {
+	var todos []*model.Todo
+	err := r.db.Find(&todos).Error
+	return todos, err
+}
+
+func (r *TodoRepository) GetByID(id string) (*model.Todo, error) {
+	var todo model.Todo
+	err := r.db.First(&todo, "id = ?", id).Error
+	return &todo, err
+}
+
+func (r *TodoRepository) Create(todo *model.Todo) error {
+	return r.db.Create(todo).Error
+}
+
+func (r *TodoRepository) Update(id string, updates map[string]interface{}) error {
+	// GORMのUpdatesメソッドは、マップで渡されたキーのフィールドだけを更新する
+	return r.db.Model(&model.Todo{}).Where("id = ?", id).Updates(updates).Error
+}
+
+func (r *TodoRepository) Delete(id string) error {
+	return r.db.Delete(&model.Todo{}, "id = ?", id).Error
+}
